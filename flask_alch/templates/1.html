@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<span style="display: flex; flex-flow: column wrap; align-content: space-between; align-items: space-around">
+{% for item in films%}
+    <!--<img class="mb_item__img" src="{{item.link_img}}" alt="Отец" title={{item.title}} itemprop="image">
+    {{item.title}}
+    -->
+    <!--<div style="display: flex; justify-content: space-around;
+    align-items: flex-start;">-->
+    <div>
+        <img src="{{item.link_img}}" alt="" title={{item.title}}>
+        <p style="display: flex; justify-content: center">
+            {{item.title}}
+        </p>
+        <p>{{films.actors}}</p>
+    </div>
+
+{% endfor %}
+</span>
+{% endblock %}

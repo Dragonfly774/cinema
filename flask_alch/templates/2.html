@@ -1,0 +1,353 @@
+{% extends "base.html" %}
+
+{% block content %}
+<span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
+{% for item in films%}
+
+<div class="card" style="width: 500px; border-radius: 15px; margin-left: 50px; margin-top: 50px;">
+
+        <span style="display: flex; margin-bottom: 150px;">
+            <div>
+            <img src="{{item.link_img}}"
+                 style="border-radius: 15px; border: 5px #ccc solid; width: 200px; height: auto(75px);" alt=""
+                 title={{item.title}}>
+                <div style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);
+                margin-top: 7px; border-radius: 15px;">
+                    <span style="margin-left: 25%;">Премьера</span></div>
+            </div>
+            <span>
+                <h3 style="margin-left: 30px">{{item.title}}</h3>
+                <span style="margin-left: 30px">{{item.genres}}</span>
+            </span>
+        </span>
+    <div class="card__timetable">
+         <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341127" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">10:10</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endfor %}
+</span>
+{% endblock %}
+<div class="card">
+    <div class="card__poster">
+        <div data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-image cursor-pointer"
+             style="background-image: url(&quot;https://madagascarkino.ru/storage/uploaded/vertical_poster_previews/2021-04/607ea639240d92.26266030.jpeg&quot;);">
+            <div class="card__poster-age ">
+                12+
+            </div>
+            <div class="card__tags" style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);">
+                <span>Премьера</span></div>
+        </div>
+        <div data-cb-action="trailer" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-play">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27 18.2679C28.3333 19.0377 28.3333 20.9623 27 21.7321L18 26.9282C16.6667 27.698 15 26.7358 15 25.1962L15 14.8038C15 13.2642 16.6667 12.302 18 13.0718L27 18.2679Z"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="card__heading">
+        <div class="card__title"><a href="https://madagascarkino.ru/cheboksary/movie/402_chernobyl/tomorrow"
+                                    data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21"
+                                    class="link link_text"><span>Чернобыль</span></a></div>
+        <div class="card__genres"><span>
+                                                                драма,                                             катастрофа                                                        </span>
+        </div>
+    </div>
+    <div class="card__timetable">
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341127" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">10:10</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341145" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">11:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341102" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">12:10</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341146" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">13:55</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341103" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">14:50</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341153" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">15:55</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341147" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">16:35</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341104" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">17:30</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341148" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">19:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341105" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">20:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341168" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">21:20</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341149" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">22:00</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341106" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">23:00</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="card__poster">
+        <div data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-image cursor-pointer"
+             style="background-image: url(&quot;https://madagascarkino.ru/storage/uploaded/vertical_poster_previews/2021-04/607ea639240d92.26266030.jpeg&quot;);">
+            <div class="card__poster-age ">
+                12+
+            </div>
+            <div class="card__tags" style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);">
+                <span>Премьера</span></div>
+        </div>
+        <div data-cb-action="trailer" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-play">
+            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+                <path d="M27 18.2679C28.3333 19.0377 28.3333 20.9623 27 21.7321L18 26.9282C16.6667 27.698 15 26.7358 15 25.1962L15 14.8038C15 13.2642 16.6667 12.302 18 13.0718L27 18.2679Z"></path>
+            </svg>
+        </div>
+    </div>
+    <div class="card__heading">
+        <div class="card__title"><a href="https://madagascarkino.ru/cheboksary/movie/402_chernobyl/tomorrow"
+                                    data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21"
+                                    class="link link_text"><span>Чернобыль</span></a></div>
+        <div class="card__genres"><span>
+                                                                драма,                                             катастрофа                                                        </span>
+        </div>
+    </div>
+    <div class="card__timetable">
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341127" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">10:10</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341145" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">11:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341102" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">12:10</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341146" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">13:55</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341103" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">14:50</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341153" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">15:55</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341147" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">16:35</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341104" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">17:30</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341148" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">19:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341105" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">20:15</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341168" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">21:20</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341149" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">22:00</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+        <div class="card__time-card">
+            <div data-cb-action="show" data-cb-id="341106" class="time-card">
+                <div class="time-card__wrap">
+                    <div class="time-card__time">23:00</div>
+                    <div class="time-card__price">
+                        от 150 <span class="rub"></span></div>
+                    <div class="time-card__hall">Стандарт</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
