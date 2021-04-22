@@ -22,7 +22,7 @@
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
 
 {% for item in films%}
-<div class="card" style="width: 500px; border-radius: 15px; margin-left: 50px; margin-top: 50px;">
+<div class="card" style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%">
 {% if current_user.is_authenticated %}
 <a href="schedule" class="btn btn-secondary">Добавить расписание к фильму</a>
 {% endif %}
@@ -38,12 +38,14 @@
             <span>
                 <h3 style="display: flex; flex-wrap: wrap; margin-left: 10%">{{item.title}}</h3>
                 <span style="display: flex; flex-wrap: wrap; margin-left: 10%; margin-bottom: 10%">{{item.genres}}</span>
-                <span style="margin-left: 10%; margin-bottom: 7%;">
+                <span style="margin-left: 10%; margin-bottom: 10%; display: flex; flex-wrap: nowrap; width: 25%; ">
                     {% for time in times%}
                     <!--<button>Надпись на кнопке</button>-->
                     {% if item.id == time.id_film %}
+                        <span style="margin-left: 10%;">
                         <a class="btn btn-outline-primary" href="/booking/{{ item.id }}">{{time.time}}</a>
-                    {%endif%}
+                        </span>
+                        {%endif%}
                     {% endfor %}
                 </span>
             </span>

@@ -255,8 +255,9 @@ def booking(id):
     film = db_sess.query(Films).filter(Films.id == id
                                       ).first()
     if film:
-        db_sess.delete(film)
-        db_sess.commit()
+        pass
+        # db_sess.delete(film)
+        # db_sess.commit()
     else:
         abort(404)
     return redirect('/register')
