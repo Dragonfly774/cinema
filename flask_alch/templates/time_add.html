@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{title}}</h1>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.time.label }}<br>
+        {{ form.time(class="form-control") }}<br>
+        {% for error in form.time.errors %}
+    <p class="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.id_film.label }}<br>
+        {{ form.id_film(class="form-control") }}<br>
+        {% for error in form.id_film.errors %}
+    <p content="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.price.label }}<br>
+        {{ form.price(class="form-control") }}<br>
+        {% for error in form.price.errors %}
+    <p content="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.hall.label }}<br>
+        {{ form.hall(class="form-control") }}<br>
+        {% for error in form.hall.errors %}
+    <p content="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+    <p>
+        {{ form.date.label }}<br>
+        {{ form.date(class="form-control") }}<br>
+        {% for error in form.date.errors %}
+    <p content="alert alert-danger" role="alert">
+        {{ error }}
+    </p>
+    {% endfor %}
+    </p>
+
+    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    {{message}}
+</form>
+{% endblock %}

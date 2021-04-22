@@ -8,6 +8,7 @@ from data.users import User
 from data.news import News
 from data.jobs import Jobs
 from data.films import Films
+from data.time_table import TimeTable
 
 from forms.user import RegisterForm
 from waitress import serve
@@ -17,6 +18,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, c
 from forms.loginform import LoginForm
 from forms.jobs import JobsForm
 from forms.news import NewsForm
+from forms.schedule import ScheduleForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -247,19 +249,17 @@ def news_delete(id):
     return redirect('/')
 
 
-@app.route('/time/<int:id>', methods=['GET', 'POST'])
-def time_table(id):
+@app.route('/booking/<int:id>', methods=['GET', 'POST'])
+def booking(id):
     db_sess = db_session.create_session()
-    news = db_sess.query(News).filter(News.id == id,
-                                      News.user == current_user
+    film = db_sess.query(Films).filter(Films.id == id
                                       ).first()
-    if news:
-        db_sess.delete(news)
+    if film:
+        db_sess.delete(film)
         db_sess.commit()
     else:
         abort(404)
     return redirect('/register')
-
 
 
 @app.route("/")
@@ -267,7 +267,8 @@ def time_table(id):
 def index():
     """авторизованного пользователя отображались и его личные записи."""
     db_sess = db_session.create_session()
-    jobs = db_sess.query(Films)
+    films = db_sess.query(Films)
+    times = db_sess.query(TimeTable)
     # if current_user.is_authenticated:
     #     news = db_sess.query(News).filter(
     #         (News.user == current_user) | (News.is_private != True))
@@ -276,7 +277,26 @@ def index():
     # # res = make_response(render_template("index.html", news=news))
     # # res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
     # return render_template("index.html", news=news, jobs=jobs)
-    return render_template("2.html", films=jobs)
+    return render_template("2.html", films=films, times=times)
+
+
+@app.route('/schedule', methods=['GET', 'POST'])
+@login_required
+def schedule():
+    form = ScheduleForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        time = TimeTable()
+        time.id_film = form.id_film.data
+        time.time = form.time.data
+        time.price = form.price.data
+        time.hall = form.hall.data
+        time.date = form.date.data
+        db_sess.add(time)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('time_add.html', title='Добавление расписание к фильму',
+                           form=form)
 
 
 @app.route("/t")
