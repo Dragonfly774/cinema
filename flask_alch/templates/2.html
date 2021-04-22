@@ -16,22 +16,14 @@
                     <span style="margin-left: 25%;">Премьера</span></div>
             </div>
             <span>
-                <h3 style="margin-left: 30px">{{item.title}}</h3>
-                <span style="margin-left: 30px">{{item.genres}}</span>
+                <h3 style="display: flex; flex-wrap: wrap; margin-left: 10%">{{item.title}}</h3>
+                <span style="display: flex; flex-wrap: wrap; margin-left: 10%; margin-bottom: 10%">{{item.genres}}</span>
+                <span style="margin-left: 10%; margin-bottom: 7%;">
+                <!--<button>Надпись на кнопке</button>-->
+                <a class="btn btn-outline-primary" href="/login">с 10:10</a>
+                </span>
             </span>
         </span>
-    <div class="card__timetable">
-         <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341127" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">10:10</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-    </div>
 </div>
 
 {% endfor %}

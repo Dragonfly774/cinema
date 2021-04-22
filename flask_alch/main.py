@@ -247,6 +247,21 @@ def news_delete(id):
     return redirect('/')
 
 
+@app.route('/time/<int:id>', methods=['GET', 'POST'])
+def time_table(id):
+    db_sess = db_session.create_session()
+    news = db_sess.query(News).filter(News.id == id,
+                                      News.user == current_user
+                                      ).first()
+    if news:
+        db_sess.delete(news)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/register')
+
+
+
 @app.route("/")
 @app.route("/index")
 def index():
@@ -335,16 +350,15 @@ def main():
 
     # news.categories.remove(category) Чтобы удалить категорию у новости, достаточно сделать:
 
-    # app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
 
     # app.run(port=5000, host='0.0.0.0')
-
 
     # app.run(port=port, host="0.0.0.0")
     #
     # # с дефаултными значениями будет не более 4 потов
-    port = int(os.environ.get('PORT', 5000))
-    serve(app, port=port, host="0.0.0.0")
+    # port = int(os.environ.get('PORT', 5000))
+    # serve(app, port=port, host="0.0.0.0")
 
 
 if __name__ == '__main__':

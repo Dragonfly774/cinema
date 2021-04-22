@@ -27,33 +27,26 @@ db_sess = db_session.create_session()
 #
 # }
 # "1249198", "1109271", "8062", "1262160", "1239328", "1236795",
-film = [ "1445243", "1309596", "688609"]
+film = ["1249198", "1109271", "8062", "1262160", "1239328", "1236795", "1445243", "1309596", "688609"]
 for i in film:
     response = requests.get(f"https://api.kinopoisk.cloud/movies/{i}/token/0d12aad940f6c3a4cdd54cfce1d9e1b9")
     # pprint(response.json())
     data_film = response.json()
-    # print(data_film)
-    # actors = data_film['actors']
+    print(data_film)
     # print(data_film['age'])
 
     film = Films()
-    film.link_img = data_film['poster']
-    film.title = data_film['title']
-    # film.actors = actors
-    film.age = data_film['age']
-    # film.collapse = data_film['collapse']
-    film.countries = ", ".join(data_film['countries'])
-    film.description = data_film['description']
-    film.directors = ", ".join(data_film['directors'])
-    # film.frames = ", ".join(data_film['frames'])
+    film.link_img = ", ".join(data_film['poster'])
+    film.title = ", ".join(data_film['title'])
+    film.actors = ", ".join(data_film['actors'])
+    film.age = ", ".join(data_film['age'])
     film.genres = ", ".join(data_film['genres'])
     film.id_kinopoisk = data_film['id_kinopoisk']
-    film.premiere_world = data_film['premiere_world']
+    film.premiere_world = ", ".join(data_film['premiere_world'])
     film.rating_imdb = data_film['rating_imdb']
     film.rating_kinopoisk = data_film['rating_kinopoisk']
-    film.year = data_film['year']
-    film.time = data_film['collapse']['duration']
-    film.producers = ", ".join(data_film['producers'])
+    film.time = ", ".join(data_film['collapse']['duration'])
+
 
     db_sess.add(film)
     db_sess.commit()
