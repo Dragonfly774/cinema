@@ -1,7 +1,7 @@
 import os
 import datetime
 
-from flask import Flask, render_template, redirect, request, make_response, session, abort
+from flask import Flask, render_template, redirect, request, make_response, session, abort, flash
 from data import db_session
 
 from data.users import User
@@ -266,18 +266,49 @@ def booking(id):
     # return redirect('/')
     return render_template("3.html", films=films, times=times, user=user)
 
+
 @app.route("/")
-@app.route("/index")
+@app.route("/index", methods=['GET', 'POST'])
 def index():
     """авторизованного пользователя отображались и его личные записи."""
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
     times = db_sess.query(TimeTable)
     user = db_sess.query(User).first()
+    buttons = [int(i) for i in range(1, 31)]
+    column = [int(i) for i in range(1, 5)]
     # print(datetime.datetime.now())
     # day_standart = datetime.datetime.now().date()
     # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
-    return render_template("2.html", films=films, times=times, user=user)
+    # а = request.form.get('checkbox-btn-group')
+    # print(a)
+    if request.method == 'POST':
+        print(request.form.get('checkbox-btn-group'))
+    # id = 0
+    # if request.method == 'POST':
+    #     id = request.form.get('checkbox-btn-group')
+    #     print(request.form.get('checkbox-btn-group'))
+    return render_template("2.html", films=films, times=times, user=user, buttons=buttons, column=column)
+
+
+@app.route("/tt", methods=['GET', 'POST'])
+def t():
+    """авторизованного пользователя отображались и его личные записи."""
+    db_sess = db_session.create_session()
+    films = db_sess.query(Films)
+    times = db_sess.query(TimeTable)
+    user = db_sess.query(User).first()
+
+    # day_standart = datetime.datetime.now().date()
+    # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
+    # а = request.form.get('checkbox-btn-group')
+    # print(a)
+    id = 0
+    if request.method == 'POST':
+        id = request.form.get('checkbox-btn-group')
+    print(request.form.get('ac'))
+        # return render_template("2.html", id=id)
+    return render_template("2.html", id=id)
 
 
 # @app.route("/admin")
@@ -305,16 +336,16 @@ def index():
 #     user = db_sess.query(User).first()
 #     print(datetime.datetime.now())
 #     day_standart = datetime.datetime.now().date()
-    # day_month = datetime.datetime.now().day()
-    # if current_user.is_authenticated:
-    #     news = db_sess.query(News).filter(
-    #         (News.user == current_user) | (News.is_private != True))
-    # else:
-    #     news = db_sess.query(News).filter(News.is_private != True)
-    # # res = make_response(render_template("index.html", news=news))
-    # # res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
-    # return render_template("index.html", news=news, jobs=jobs)
-    # return render_template("2.html", films=films, times=times, user=user)
+# day_month = datetime.datetime.now().day()
+# if current_user.is_authenticated:
+#     news = db_sess.query(News).filter(
+#         (News.user == current_user) | (News.is_private != True))
+# else:
+#     news = db_sess.query(News).filter(News.is_private != True)
+# # res = make_response(render_template("index.html", news=news))
+# # res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
+# return render_template("index.html", news=news, jobs=jobs)
+# return render_template("2.html", films=films, times=times, user=user)
 
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required

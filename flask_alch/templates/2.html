@@ -10,7 +10,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
         integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
         crossorigin="anonymous"></script>
-
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
@@ -30,7 +29,7 @@
         </div>
     </div>
 </div>
-
+<h3>{{id}}</h3>
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
 
 {% for item in films%}
@@ -54,39 +53,63 @@
                     {% for time in times%}
                     <!--<button>Надпись на кнопке</button>-->
                     {% if item.id == time.id_film %}
+                        {% set a = time.film.title %}
+
+
                         <span style="margin-left: 10%;">
 <!--                            <a class="btn btn-outline-primary" href="okno">{{time.time}}</a>-->
                             <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
+                                data-target="#exampleModalCenter">
                           {{time.time}}
                         </button>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                           <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
                             <div class="modal-content">
-                              <div class="modal-header" >
+                              <div class="modal-header">
                                 <h5 class="modal-title modal-dialog-scrollable" id="exampleModalLongTitle">Места</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                   <span aria-hidden="true">&times;</span>
                                 </button>
                               </div>
                               <div class="modal-body">
-                                  <span style="text-align: center"><h5>{{item.title}}</h5></span>
-                                    <div class="places all" style="margin-left: 10%">
-                                        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Dłuto_odwrotne.svg/400px-Dłuto_odwrotne.svg.png" alt="" style=""></span>
+                                  <span style="text-align: center">
+                                      <h4>{{a}}</h4>
+                                  </span>
+                                    <div class="places all" style="width: 100%">
+<!--                                        {%for col in column%}-->
+                                        <!-- <span style="display: flex; flex-wrap: wrap; margin-top: 2%;flex-direction: column;">{{col}}</span>-->
+                                        <!--{%endfor%}-->
+
                                         <div class="place">
-                                             <button type="button" class="pl">
-                                                 {%%}
-                                                <span style="width: 10px; height: 10px;"></span>
+                                            <div class="button" style="margin-left: 20%; width: 50%">
+                                                 {%for but in buttons%}
+                                                <div class="checkbox-btn-group">
+<!--                                                     <form action="" method="post">-->
+                                                        <!--<button class="pl" value="{{but}}">-->
+<!--                                                             <span style="display: flex; flex-wrap: wrap; margin-left: 10%;margin-top: 20%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span>-->
+<!--                                                                                                        </button>-->                                        <label>
+
+                                                    <input type="checkbox" class="checkbox-btn-group" id="{{but}}" name="ac">
+                                                         <span style="display: flex; flex-wrap: wrap; margin-left: 10%;margin-top: 20%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span></label>
+<!--                                                             </form>-->
+                                                </div>
+
                                                  {%endfor%}
-                                             </button>
+
+                                            </div>
+                                        </div>
+                                        <div class="booking">
+
                                         </div>
                                     </div>
                               </div>
                               <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Save changes</button>
+                                <a class="btn btn-outline-primary" href="/tt">далее</a>
                               </div>
                             </div>
                           </div>
