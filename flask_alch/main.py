@@ -253,15 +253,18 @@ def news_delete(id):
 def booking(id):
     db_sess = db_session.create_session()
     film = db_sess.query(Films).filter(Films.id == id
-                                      ).first()
+                                       ).first()
+    films = db_sess.query(Films)
+    times = db_sess.query(TimeTable)
+    user = db_sess.query(User).first()
     if film:
         pass
         # db_sess.delete(film)
         # db_sess.commit()
     else:
         abort(404)
-    return redirect('/register')
-
+    # return redirect('/')
+    return render_template("3.html", films=films, times=times, user=user)
 
 @app.route("/")
 @app.route("/index")
@@ -270,6 +273,39 @@ def index():
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
     times = db_sess.query(TimeTable)
+    user = db_sess.query(User).first()
+    # print(datetime.datetime.now())
+    # day_standart = datetime.datetime.now().date()
+    # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
+    return render_template("2.html", films=films, times=times, user=user)
+
+
+# @app.route("/admin")
+# def admin():
+#     """авторизованного пользователя отображались и его личные записи."""
+#     form = LoginForm()
+#     if form.validate_on_submit():
+#         db_sess = db_session.create_session()
+#         user = db_sess.query(User).filter(User.email == form.email.data).first()
+#         if user and user.check_password(form.password.data):
+#             login_user(user, remember=form.remember_me.data)
+#             return redirect("/")
+#         return render_template('admin.html',
+#                                message="Неправильный логин или пароль",
+#                                form=form)
+#     return render_template('admin.html', form=form)
+
+# @app.route("/")
+# @app.route("/index")
+# def index():
+#     """авторизованного пользователя отображались и его личные записи."""
+#     db_sess = db_session.create_session()
+#     films = db_sess.query(Films)
+#     times = db_sess.query(TimeTable)
+#     user = db_sess.query(User).first()
+#     print(datetime.datetime.now())
+#     day_standart = datetime.datetime.now().date()
+    # day_month = datetime.datetime.now().day()
     # if current_user.is_authenticated:
     #     news = db_sess.query(News).filter(
     #         (News.user == current_user) | (News.is_private != True))
@@ -278,8 +314,7 @@ def index():
     # # res = make_response(render_template("index.html", news=news))
     # # res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
     # return render_template("index.html", news=news, jobs=jobs)
-    return render_template("2.html", films=films, times=times)
-
+    # return render_template("2.html", films=films, times=times, user=user)
 
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required

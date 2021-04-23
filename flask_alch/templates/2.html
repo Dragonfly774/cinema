@@ -1,29 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-  <div class="carousel-inner">
-    <div class="carousel-item active">
-      <img class="d-block w-100" style="border-radius: 15px; width: 100%; " src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/20.04.2021/607ea70f571f49.66432167.jpg" alt="First slide">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img class="d-block w-100" style="border-radius: 15px; width: 100%; "
+                 src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/20.04.2021/607ea70f571f49.66432167.jpg"
+                 alt="First slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" style="border-radius: 15px; width: 100%; "
+                 src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/06.04.2021/606c44cfd14083.62343697.jpg"
+                 alt="Second slide">
+        </div>
+        <div class="carousel-item">
+            <img class="d-block w-100" style="border-radius: 15px; width: 100%; "
+                 src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/13.04.2021/60759f7b0a7d07.60335807.jpg"
+                 alt="Third slide">
+        </div>
     </div>
-    <div class="carousel-item">
-      <img class="d-block w-100" style="border-radius: 15px; width: 100%; " src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/06.04.2021/606c44cfd14083.62343697.jpg" alt="Second slide">
-    </div>
-    <div class="carousel-item">
-       <img class="d-block w-100" style="border-radius: 15px; width: 100%; " src="https://cinema5.cinemabox.team/storage/uploaded/cinema_photos/13.04.2021/60759f7b0a7d07.60335807.jpg" alt="Third slide">
-    </div>
-  </div>
 </div>
 
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
 
 {% for item in films%}
 <div class="card" style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%">
-{% if current_user.is_authenticated %}
+{% if current_user.is_authenticated and current_user == user%}
 <a href="schedule" class="btn btn-secondary">Добавить расписание к фильму</a>
 {% endif %}
         <span style="display: flex; margin-bottom: 150px;">
@@ -43,7 +55,42 @@
                     <!--<button>Надпись на кнопке</button>-->
                     {% if item.id == time.id_film %}
                         <span style="margin-left: 10%;">
-                        <a class="btn btn-outline-primary" href="/booking/{{ item.id }}">{{time.time}}</a>
+<!--                            <a class="btn btn-outline-primary" href="okno">{{time.time}}</a>-->
+                            <!-- Button trigger modal -->
+                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                          {{time.time}}
+                        </button>
+
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                              <div class="modal-header" >
+                                <h5 class="modal-title modal-dialog-scrollable" id="exampleModalLongTitle">Места</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body">
+                                  <span style="text-align: center"><h5>{{item.title}}</h5></span>
+                                    <div class="places all" style="margin-left: 10%">
+                                        <span><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a4/Dłuto_odwrotne.svg/400px-Dłuto_odwrotne.svg.png" alt="" style=""></span>
+                                        <div class="place">
+                                             <button type="button" class="pl">
+                                                 {%%}
+                                                <span style="width: 10px; height: 10px;"></span>
+                                                 {%endfor%}
+                                             </button>
+                                        </div>
+                                    </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Save changes</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                         </span>
                         {%endif%}
                     {% endfor %}
@@ -55,317 +102,3 @@
 {% endfor %}
 </span>
 {% endblock %}
-<div class="card">
-    <div class="card__poster">
-        <div data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-image cursor-pointer"
-             style="background-image: url(&quot;https://madagascarkino.ru/storage/uploaded/vertical_poster_previews/2021-04/607ea639240d92.26266030.jpeg&quot;);">
-            <div class="card__poster-age ">
-                12+
-            </div>
-            <div class="card__tags" style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);">
-                <span>Премьера</span></div>
-        </div>
-        <div data-cb-action="trailer" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-play">
-            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <path d="M27 18.2679C28.3333 19.0377 28.3333 20.9623 27 21.7321L18 26.9282C16.6667 27.698 15 26.7358 15 25.1962L15 14.8038C15 13.2642 16.6667 12.302 18 13.0718L27 18.2679Z"></path>
-            </svg>
-        </div>
-    </div>
-    <div class="card__heading">
-        <div class="card__title"><a href="https://madagascarkino.ru/cheboksary/movie/402_chernobyl/tomorrow"
-                                    data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21"
-                                    class="link link_text"><span>Чернобыль</span></a></div>
-        <div class="card__genres"><span>
-                                                                драма,                                             катастрофа                                                        </span>
-        </div>
-    </div>
-    <div class="card__timetable">
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341127" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">10:10</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341145" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">11:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341102" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">12:10</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341146" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">13:55</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341103" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">14:50</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341153" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">15:55</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341147" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">16:35</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341104" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">17:30</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341148" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">19:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341105" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">20:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341168" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">21:20</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341149" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">22:00</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341106" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">23:00</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<div class="card">
-    <div class="card__poster">
-        <div data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-image cursor-pointer"
-             style="background-image: url(&quot;https://madagascarkino.ru/storage/uploaded/vertical_poster_previews/2021-04/607ea639240d92.26266030.jpeg&quot;);">
-            <div class="card__poster-age ">
-                12+
-            </div>
-            <div class="card__tags" style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);">
-                <span>Премьера</span></div>
-        </div>
-        <div data-cb-action="trailer" data-cb-id="402" data-cb-date="2021-04-21" class="card__poster-play">
-            <svg viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
-                <path d="M27 18.2679C28.3333 19.0377 28.3333 20.9623 27 21.7321L18 26.9282C16.6667 27.698 15 26.7358 15 25.1962L15 14.8038C15 13.2642 16.6667 12.302 18 13.0718L27 18.2679Z"></path>
-            </svg>
-        </div>
-    </div>
-    <div class="card__heading">
-        <div class="card__title"><a href="https://madagascarkino.ru/cheboksary/movie/402_chernobyl/tomorrow"
-                                    data-cb-action="movie" data-cb-id="402" data-cb-date="2021-04-21"
-                                    class="link link_text"><span>Чернобыль</span></a></div>
-        <div class="card__genres"><span>
-                                                                драма,                                             катастрофа                                                        </span>
-        </div>
-    </div>
-    <div class="card__timetable">
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341127" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">10:10</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341145" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">11:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341102" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">12:10</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341146" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">13:55</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341103" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">14:50</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341153" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">15:55</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341147" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">16:35</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341104" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">17:30</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341148" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">19:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341105" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">20:15</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341168" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">21:20</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341149" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">22:00</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-        <div class="card__time-card">
-            <div data-cb-action="show" data-cb-id="341106" class="time-card">
-                <div class="time-card__wrap">
-                    <div class="time-card__time">23:00</div>
-                    <div class="time-card__price">
-                        от 150 <span class="rub"></span></div>
-                    <div class="time-card__hall">Стандарт</div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
