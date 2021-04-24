@@ -9,10 +9,12 @@ class Booking(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     id_booking = sqlalchemy.Column(sqlalchemy.Integer)
-    place = sqlalchemy.Column(sqlalchemy.String)
-    count = sqlalchemy.Column(sqlalchemy.String)
+    place = sqlalchemy.Column(sqlalchemy.Integer)
+    # count = sqlalchemy.Column(sqlalchemy.String)
     roww = sqlalchemy.Column(sqlalchemy.Integer)
     number = sqlalchemy.Column(sqlalchemy.String)
+    time = sqlalchemy.Column(sqlalchemy.String)
+    title = sqlalchemy.Column(sqlalchemy.String)
     email = sqlalchemy.Column(sqlalchemy.String, sqlalchemy.ForeignKey("users.id"))
     name = sqlalchemy.Column(sqlalchemy.String)
 

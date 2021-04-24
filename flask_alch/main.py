@@ -197,7 +197,7 @@ def index():
     films = db_sess.query(Films)
     times = db_sess.query(TimeTable).filter(TimeTable.date == day_month)
     user = db_sess.query(User).first()
-    return render_template("2.html", films=films, times=times, user=user)
+    return render_template("index.html", films=films, times=times, user=user)
 
 
 @app.route("/booking/<int:id>", methods=['GET', 'POST'])
@@ -207,28 +207,68 @@ def booking(id):
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
     times = db_sess.query(TimeTable)
-    user = db_sess.query(User).first()
-    buttons = [int(i) for i in range(1, 31)]
+    # user = db_sess.query(User).first()
+    # user = db_sess.query(User).filter(User.id == current_user).first()
+    places = [int(i) for i in range(1, 16)]
     column = [int(i) for i in range(1, 5)]
     form = BookingForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         id_booking = int(randrange(99999))
-        book = Booking(
-            id_booking=id_booking,
-            place=form.place.data,
-            count=form.count.data,
-            roww=form.rov.data,
-            number=form.number.data,
-            name=form.name.data
-        )
-        db_sess.add(book)
-        db_sess.commit()
-        print(1)
-        return redirect('/')
-    print(form.validate_on_submit())
-    return render_template("3.html", id=id, times=times, user=user, buttons=buttons, column=column,
+        plase_and_row = db_sess.query(Booking).filter(Booking.place == request.form['place'],
+                                                      Booking.roww == request.form['row']).first()
+        if plase_and_row:
+            return render_template("booking.html", id=id, times=times, places=places, column=column, form=form,
+                                   message="Такой пользователь уже есть")
+        if request.method == 'POST':
+            for time in times:
+                if time.id == id:
+                    book = Booking(
+                        id_booking=id_booking,
+                        place=request.form['place'],
+                        # count=request.form['count'],
+                        time=f"{time.date} в {time.time}",
+                        title=time.film.title,
+                        roww=request.form['row'],
+                        email=current_user.email,
+                        number=form.number.data,
+                        name=form.name.data
+                    )
+                    db_sess.add(book)
+                    db_sess.commit()
+                    return redirect('/my_booking')
+    return render_template("booking.html", id=id, ids=id, times=times, places=places, column=column,
                            form=form)
+
+
+@app.route("/my_booking", methods=['GET', 'POST'])
+def my_booking():
+    """
+    Главная страница, где располагаются фильмы в прокате
+    :return: главную страницу
+    """
+
+    db_sess = db_session.create_session()
+    booking = db_sess.query(Booking).filter(Booking.email == current_user.email)
+    # booking_email = db_sess.query(Booking).filter(Booking)
+    user = db_sess.query(User).first()
+
+    return render_template("my_booking.html", booking=booking, user=user)
+
+
+@app.route('/my_booking_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def my_booking_delete(id):
+    db_sess = db_session.create_session()
+    news = db_sess.query(Booking).filter(Booking.id == id,
+                                      Booking.email == current_user.email
+                                      ).first()
+    if news:
+        db_sess.delete(news)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/my_booking')
 
 
 @app.route('/schedule', methods=['GET', 'POST'])
