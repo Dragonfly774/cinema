@@ -4,19 +4,6 @@
 <h1>Авторизация</h1>
 <form action="" method="post">
     {{ form.hidden_tag() }}
-    <!--
-    <p>
-    {{ form.email.label }}<br>
-    {{ form.email(class="form-control") }}<br>
-    {% for error in form.email.errors %}
-        <p class="alert alert-danger" role="alert">
-            {{ error }}
-        </p>
-    {% endfor %}
-    </p>
-    <p>
-
-    -->
     <p>
         {{ form.email.label }}<br>
         {{ form.email(class="form-control", type="email") }}<br>
@@ -36,8 +23,15 @@
     {% endfor %}
     </p>
     <p>{{ form.remember_me() }} {{ form.remember_me.label }}</p>
-    <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-    <div>{{ message }}</div>
+    <span style="display: flex; flex-direction: row;">
+        <div>
+            <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+            <div>{{ message }}</div>
+        </div>
+        <div style="margin-left: 1%">
+          <a class="btn btn-outline-primary" href="register" style="">Регестрация</a>
+        </div>
+    </span>
 </form>
 
 {% endblock %}

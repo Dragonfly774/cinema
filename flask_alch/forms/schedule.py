@@ -10,5 +10,5 @@ class ScheduleForm(FlaskForm):
     price = StringField("Цена билета", validators=[DataRequired()])
     # hall = StringField("Номер зала", validators=[DataRequired()])
     date_day = StringField("День", validators=[DataRequired()])
-    date_month = StringField("Месяц", validators=[DataRequired()])
+    # date_month = StringField("Месяц", validators=[DataRequired()])
     submit = SubmitField('Сохранить')

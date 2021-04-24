@@ -2,13 +2,14 @@ from pprint import pprint
 
 from data import db_session
 from data.time_table import TimeTable
+from data.booking import Booking
 import datetime
 
 months = {
     1: 'Январь',
     2: 'Февраль',
     3: 'Март',
-    4: ["апрель", "апреля", "Апрель", "Апреля"],
+    4: 'Апрель',
     5: 'Май',
     6: 'Июнь',
     7: 'Июль',
@@ -18,15 +19,16 @@ months = {
     11: 'Ноябрь',
     12: 'Декабрь'
 }
-day = "24 Апрель"
-day_st = '2021-04-23'
-day_standart = f'{datetime.datetime.now().date()}'
-day_month = f'{datetime.datetime.now().day} {months[datetime.datetime.now().month]}'
-# if
-print(day_month)
-# db_session.global_init("db/blogs.sqlite")
-# db_sess = db_session.create_session()
-# time = db_sess.query(TimeTable).first()
+
+day= f'{datetime.datetime.now().day}'
+day_month = f'{months[datetime.datetime.now().month]}'
+
+print(day,day_month)
+
+
+db_session.global_init("db/blogs.sqlite")
+db_sess = db_session.create_session()
+time = db_sess.query(TimeTable).first()
 # print(time.film.title)
 # # # print(', '.join(time.time))
 # # print(time.time[::])
@@ -38,3 +40,4 @@ print(day_month)
 # film.date = "2021-04-24"
 # db_sess.add(film)
 # db_sess.commit()
+# print(len('+79022879533'))

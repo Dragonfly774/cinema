@@ -4,6 +4,5 @@ from . import news
 from . import jobs
 from . import films
 from . import time_table
-from . import category
 from . import booking
 

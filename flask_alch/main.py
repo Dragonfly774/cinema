@@ -21,7 +21,7 @@ from forms.loginform import LoginForm
 from forms.jobs import JobsForm
 from forms.news import NewsForm
 from forms.schedule import ScheduleForm
-from forms.booking import Booking
+from forms.booking import BookingForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -30,115 +30,31 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
-def add_users(db):
-    db_sess = db
-
-    user = User()
-    user.name = "Ridley"
-    user.surname = "Scott"
-    user.age = 21
-    user.position = "captain"
-    user.speciality = "research engineer"
-    user.address = "module_1"
-    user.email = "scott_chief@mars.org"
-    db_sess.add(user)
-
-    user2 = User()
-    user2.name = "Ilon"
-    user2.surname = "DontMask"
-    user2.age = 45
-    user2.position = "sailor"
-    user2.speciality = "engineer"
-    user2.address = "module_1"
-    user2.email = "ilon_mars@mars.org"
-    db_sess.add(user2)
-
-    user3 = User()
-    user3.name = "NoName"
-    user3.surname = "NoName"
-    user3.age = 19
-    user3.position = "sailor"
-    user3.speciality = "No"
-    user3.address = "module_2"
-    user3.email = "NoName@mars.org"
-    db_sess.add(user3)
-
-    user4 = User()
-    user4.name = "Saimon"
-    user4.surname = "Romanov"
-    user4.age = 16
-    user4.position = "chief assistant"
-    user4.speciality = "robotics engineer"
-    user4.address = "module_1"
-    user4.email = "mars_bez_putina@mars.org"
-    db_sess.add(user4)
-
-    user5 = User()
-    user5.name = "404"
-    user5.surname = "404"
-    user5.age = 404
-    user5.position = "sailor"
-    user5.speciality = "kettle"
-    user5.address = "module_3"
-    user5.email = "404_kettle@mars.org"
-    db_sess.add(user5)
-
-    db_sess.commit()
-
-
-def add_films(db):
-    db_sess = db
-
-    # film = Films()
-    # film.link_img = "https://img06.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/24/210324205026182.jpg"
-    # film.title = "Отец"
-    # db_sess.add(film)
-    #
-    # film = Films()
-    # film.link_img = "https://img05.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/20/210320081016449.jpg"
-    # film.title = "Чернобыль"
-    # db_sess.add(film)
-    #
-    # film = Films()
-    # film.link_img = "https://img09.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/20/210320081018655.jpg"
-    # film.title = "Мортал Кобмат"
-    # db_sess.add(film)
-
-    film = Films()
-    film.link_img = "https://img05.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/31/210331095026517.jpg"
-    film.title = "Гнев человеческий"
-    db_sess.add(film)
-
-    film = Films()
-    film.link_img = "https://img03.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/18/210318195031411.jpg"
-    film.title = "Майор Гром: Чумной Доктор"
-    db_sess.add(film)
-
-    film = Films()
-    film.link_img = "https://img01.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2104/09/210409051514277.jpg"
-    film.title = "От винта 2"
-    db_sess.add(film)
-
-    film = Films()
-    film.link_img = "https://img01.rl0.ru/kassa/c128x192q80i/kassa.rambler.ru/s/StaticContent/P/Aimg/2103/25/210325210045208.jpg"
-    film.title = "100% Волк"
-    db_sess.add(film)
-    db_sess.commit()
+"""пользователя будет перегидовать на форму регестрации, 
+когда попытаеться перейти к обработчику доступному только для авторизованых"""
+login_manager.login_view = '/register'
 
 
 @login_manager.user_loader
 def load_user(user_id):
-    """Для верной работы flask-login
+    """
+    Для верной работы flask-login
     у нас должна быть функция для
     получения пользователя, украшенная
-    декоратором login_manager.user_loader"""
+    декоратором login_manager.user_loader
+    :param user_id:
+    :return: user
+    """
     db_sess = db_session.create_session()
     return db_sess.query(User).get(user_id)
 
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    """
+    обработчик формы авторизации
+    :return: login.html форму авторизации
+    """
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -252,120 +168,84 @@ def news_delete(id):
     return redirect('/')
 
 
-# @app.route('/booking/<int:id>', methods=['GET', 'POST'])
-# def booking(id):
-#     db_sess = db_session.create_session()
-#     film = db_sess.query(Films).filter(Films.id == id
-#                                        ).first()
-#     films = db_sess.query(Films)
-#     times = db_sess.query(TimeTable)
-#     user = db_sess.query(User).first()
-#     if film:
-#         pass
-#         # db_sess.delete(film)
-#         # db_sess.commit()
-#     else:
-#         abort(404)
-#     # return redirect('/')
-#     return render_template("3.html", films=films, times=times, user=user)
-
-
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 def index():
-    """авторизованного пользователя отображались и его личные записи."""
-    print(datetime.datetime.now())
-    # day_standart = datetime.datetime.now().date()
+    """
+    Главная страница, где располагаются фильмы в прокате
+    :return: главную страницу
+    """
+    months = {
+        1: 'Январь',
+        2: 'Февраль',
+        3: 'Март',
+        4: 'Апрель',
+        5: 'Май',
+        6: 'Июнь',
+        7: 'Июль',
+        8: 'Август',
+        9: 'Сентябрь',
+        10: 'Октябрь',
+        11: 'Ноябрь',
+        12: 'Декабрь'
+    }
+    # время покупки билетов отображается именно в тот день который указан
+    day = f'{datetime.datetime.now().day}'
+    day_month = f'{day} {months[datetime.datetime.now().month]}'
+
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
-    times = db_sess.query(TimeTable)
+    times = db_sess.query(TimeTable).filter(TimeTable.date == day_month)
     user = db_sess.query(User).first()
     return render_template("2.html", films=films, times=times, user=user)
 
 
 @app.route("/booking/<int:id>", methods=['GET', 'POST'])
+@login_required
 def booking(id):
-    """авторизованного пользователя отображались и его личные записи."""
+    """Обработчик формы бронирование билетов"""
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
     times = db_sess.query(TimeTable)
     user = db_sess.query(User).first()
     buttons = [int(i) for i in range(1, 31)]
     column = [int(i) for i in range(1, 5)]
-    form = Booking()
+    form = BookingForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        booking = Booking()
-        print(randrange(999999))
-        if booking.rov.data < 9 and booking.count.data < 125:
-            booking.id_booking = randrange(999999)
-            booking.row = form.rov.data
-            booking.count = form.count.data
-            booking.place = f"'{form.place.data}'"
-            db_sess.add(booking)
-            db_sess.commit()
-        else:
-            return 1
-
-
+        id_booking = int(randrange(99999))
+        book = Booking(
+            id_booking=id_booking,
+            place=form.place.data,
+            count=form.count.data,
+            roww=form.rov.data,
+            number=form.number.data,
+            name=form.name.data
+        )
+        db_sess.add(book)
+        db_sess.commit()
+        print(1)
         return redirect('/')
+    print(form.validate_on_submit())
     return render_template("3.html", id=id, times=times, user=user, buttons=buttons, column=column,
                            form=form)
-    # print(datetime.datetime.now())
-    # day_standart = datetime.datetime.now().date()
-    # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
-    # а = request.form.get('checkbox-btn-group')
-    # print(a)
 
-
-# @app.route("/admin")
-# def admin():
-#     """авторизованного пользователя отображались и его личные записи."""
-#     form = LoginForm()
-#     if form.validate_on_submit():
-#         db_sess = db_session.create_session()
-#         user = db_sess.query(User).filter(User.email == form.email.data).first()
-#         if user and user.check_password(form.password.data):
-#             login_user(user, remember=form.remember_me.data)
-#             return redirect("/")
-#         return render_template('admin.html',
-#                                message="Неправильный логин или пароль",
-#                                form=form)
-#     return render_template('admin.html', form=form)
-
-# @app.route("/")
-# @app.route("/index")
-# def index():
-#     """авторизованного пользователя отображались и его личные записи."""
-#     db_sess = db_session.create_session()
-#     films = db_sess.query(Films)
-#     times = db_sess.query(TimeTable)
-#     user = db_sess.query(User).first()
-#     print(datetime.datetime.now())
-#     day_standart = datetime.datetime.now().date()
-# day_month = datetime.datetime.now().day()
-# if current_user.is_authenticated:
-#     news = db_sess.query(News).filter(
-#         (News.user == current_user) | (News.is_private != True))
-# else:
-#     news = db_sess.query(News).filter(News.is_private != True)
-# # res = make_response(render_template("index.html", news=news))
-# # res.set_cookie("visits_count", '1', max_age=60 * 60 * 24 * 365 * 2)
-# return render_template("index.html", news=news, jobs=jobs)
-# return render_template("2.html", films=films, times=times, user=user)
 
 @app.route('/schedule', methods=['GET', 'POST'])
 @login_required
 def schedule():
+    """Обработчик формы добавления расписания"""
     form = ScheduleForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         time = TimeTable()
-        time.id_film = form.id_film.data
-        time.time = form.time.data
-        time.price = form.price.data
         # time.hall = form.hall.data
-        time.date = f"{form.date_day.data} {form.date_month.data}"
+        if request.method == 'POST':
+            date_month = request.form['class']
+            time.date = f"{form.date_day.data} {date_month}"
+            time.id_film = form.id_film.data
+            time.time = form.time.data
+            time.price = form.price.data
         db_sess.add(time)
         db_sess.commit()
         return redirect('/')
@@ -373,16 +253,9 @@ def schedule():
                            form=form)
 
 
-@app.route("/t")
-@app.route("/jobs")
-def table_jobs():
-    db_sess = db_session.create_session()
-    jobs = db_sess.query(Jobs)
-    return render_template("table_jobs.html", jobs=jobs)
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def reqister():
+    """Обработчик формы регистрации"""
     form = RegisterForm()
     if form.validate_on_submit():
         if form.password.data != form.password_again.data:
@@ -404,52 +277,13 @@ def reqister():
         db_sess.add(user)
         db_sess.commit()
         return redirect('/login')
-        # return redirect('/t')
     return render_template('register.html', title='Регистрация', form=form)
-
-
-# @app.route("/c")
-# @app.route("/cookie_test")
-# def cookie_test():
-#     visits_count = int(request.cookies.get("visits_count", 0))
-#     if visits_count:
-#         res = make_response(
-#             f"Вы пришли на эту страницу {visits_count + 1} раз")
-#         res.set_cookie("visits_count", str(visits_count + 1),
-#                        max_age=60 * 60 * 24 * 365 * 2)
-#     else:
-#         res = make_response(
-#             "Вы пришли на эту страницу в первый раз за последние 2 года")
-#         res.set_cookie("visits_count", '1',
-#                        max_age=60 * 60 * 24 * 365 * 2)
-#     return res
-
-@app.route("/s")
-@app.route("/session_test")
-def session_test():
-    """session.pop('visits_count', None) delete session"""
-    visits_count = session.get('visits_count', 0)
-    session['visits_count'] = visits_count + 1
-    return make_response(
-        f"Вы пришли на эту страницу {visits_count + 1} раз")
 
 
 def main():
     db_session.global_init("db/blogs.sqlite")
     db_sess = db_session.create_session()
-    # add_users(db_sess)
-    # add_films(db_sess)
-    # add_jobs(db_sess)
-    # add_news(db_sess)
-
-    # news.categories.remove(category) Чтобы удалить категорию у новости, достаточно сделать:
-
     app.run(port=8080, host='127.0.0.1')
-
-    # app.run(port=5000, host='0.0.0.0')
-
-    # app.run(port=port, host="0.0.0.0")
-    #
     # # с дефаултными значениями будет не более 4 потов
     # port = int(os.environ.get('PORT', 5000))
     # serve(app, port=port, host="0.0.0.0")

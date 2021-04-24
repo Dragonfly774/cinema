@@ -59,8 +59,15 @@
             </p>
         {% endfor %}
     </p>
-
+    <span style="display: flex; flex-direction: row;">
+     <div>
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
+     </div>
+     <div style="margin-left: 1%">
+          <a class="btn btn-outline-primary" href="login" style="">Есть аккаунт</a>
+
+     </div>
+    </span>
 </form>
 {% endblock %}

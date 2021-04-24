@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -15,17 +15,21 @@
     <nav class="navbar navbar-light bg-light">
         <h1>Cinema Sema</h1>
         {% if current_user.is_authenticated %}
-            <a class="navbar-brand" href="/logout">Выйти</a>
+        <span style="margin-left: 1%">
+            <a class="navbar-brand btn-light" href="/logout">Выйти</a>
+            <a class="btn btn-light " href="/">Главная</a>
+            <a class="btn btn-light" href="/my_booking">Моя Бронь</a>
+        </span>
         {% else %}
         <p>
-            <a class="btn btn-primary " href="/register">Зарегистрироваться</a>
-            <a class="btn btn-success" href="/login">Войти</a>
+            <a class="btn btn-light " href="/register">Зарегистрироваться</a>
+            <a class="btn btn-light" href="/login">Войти</a>
         </p>
 {% endif %}
     </nav>
 </header>
 <!-- Begin page content -->
-<main role="main" class="container">
+<main role="main" class="container" style="margin-top: 4%;">
     {% block content %}{% endblock %}
 </main>
 </body>

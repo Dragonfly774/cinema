@@ -3,6 +3,8 @@ from pprint import pprint
 from data import db_session
 from data.films import Films
 
+"""Api кинопоиска для парсинга фильмов"""
+
 db_session.global_init("db/blogs.sqlite")
 db_sess = db_session.create_session()
 # data = {

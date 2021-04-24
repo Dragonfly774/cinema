@@ -41,15 +41,17 @@
     </p>
     {% endfor %}
     </p>
-    <p>
-        {{ form.date_month.label }}<br>
-        {{ form.date_month(class="form-control") }}<br>
-        {% for error in form.date_month.errors %}
-    <p content="alert alert-danger" role="alert">
-        {{ error }}
-    </p>
-    {% endfor %}
-    </p>
+
+    <div class="form-group">
+        <label for="classSelect">Месяц</label>
+        <select class="form-control" id="classSelect" name="class">
+          <option>Апрель</option>
+          <option>Май</option>
+          <option>Июнь</option>
+          <option>Июль</option>
+          <option>Август</option>
+        </select>
+     </div>
 
     <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
     {{message}}
