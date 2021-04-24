@@ -29,94 +29,40 @@
         </div>
     </div>
 </div>
-<h3>{{id}}</h3>
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
 
 {% for item in films%}
-<div class="card" style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%">
+<div class="card" style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
 {% if current_user.is_authenticated and current_user == user%}
 <a href="schedule" class="btn btn-secondary">Добавить расписание к фильму</a>
 {% endif %}
-        <span style="display: flex; margin-bottom: 150px;">
+        <span style="display: flex; ">
             <div>
             <img src="{{item.link_img}}"
-                 style="border-radius: 15px; border: 5px #ccc solid; width: 200px; height: auto(75px);" alt=""
+                 style="border-radius: 15px; border: 5px #ccc solid; width: 200px; height: auto(75px); " alt=""
                  title={{item.title}}>
                 <div style="background-color: rgb(208, 2, 27); color: rgb(255, 255, 255);
                 margin-top: 7px; border-radius: 15px;">
                     <span style="margin-left: 25%;">Премьера</span></div>
             </div>
             <span>
-                <h3 style="display: flex; flex-wrap: wrap; margin-left: 10%">{{item.title}}</h3>
-                <span style="display: flex; flex-wrap: wrap; margin-left: 10%; margin-bottom: 10%">{{item.genres}}</span>
-                <span style="margin-left: 10%; margin-bottom: 10%; display: flex; flex-wrap: nowrap; width: 25%; ">
+                <h3 style="">{{item.title}}</h3>
+                <span style="">{{item.genres}}</span>
+
+                <span style="">
+<!--                    margin-left: 10%; margin-bottom: 10%; display: flex;flex-wrap: wrap; width: 13%; lex-direction: row;-->
                     {% for time in times%}
                     <!--<button>Надпись на кнопке</button>-->
                     {% if item.id == time.id_film %}
-                        {% set a = time.film.title %}
 
 
-                        <span style="margin-left: 10%;">
-<!--                            <a class="btn btn-outline-primary" href="okno">{{time.time}}</a>-->
-                            <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-outline-primary" data-toggle="modal"
-                                data-target="#exampleModalCenter">
-                          {{time.time}}
-                        </button>
-
-                            <!-- Modal -->
-                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
-                             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                          <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title modal-dialog-scrollable" id="exampleModalLongTitle">Места</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                  <span aria-hidden="true">&times;</span>
-                                </button>
-                              </div>
-                              <div class="modal-body">
-                                  <span style="text-align: center">
-                                      <h4>{{a}}</h4>
-                                  </span>
-                                    <div class="places all" style="width: 100%">
-<!--                                        {%for col in column%}-->
-                                        <!-- <span style="display: flex; flex-wrap: wrap; margin-top: 2%;flex-direction: column;">{{col}}</span>-->
-                                        <!--{%endfor%}-->
-
-                                        <div class="place">
-                                            <div class="button" style="margin-left: 20%; width: 50%">
-                                                 {%for but in buttons%}
-                                                <div class="checkbox-btn-group">
-<!--                                                     <form action="" method="post">-->
-                                                        <!--<button class="pl" value="{{but}}">-->
-<!--                                                             <span style="display: flex; flex-wrap: wrap; margin-left: 10%;margin-top: 20%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span>-->
-<!--                                                                                                        </button>-->                                        <label>
-
-                                                    <input type="checkbox" class="checkbox-btn-group" id="{{but}}" name="ac">
-                                                         <span style="display: flex; flex-wrap: wrap; margin-left: 10%;margin-top: 20%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span></label>
-<!--                                                             </form>-->
-                                                </div>
-
-                                                 {%endfor%}
-
-                                            </div>
-                                        </div>
-                                        <div class="booking">
-
-                                        </div>
-                                    </div>
-                              </div>
-                              <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <a class="btn btn-outline-primary" href="/tt">далее</a>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+                        <span style="">
+                        <a class="btn btn-outline-primary" href="booking/{{time.id}}" style="">{{time.time}}</a>
                         </span>
                         {%endif%}
+<!--                    style="margin-bottom: 10%; display: flex; flex-wrap: wrap; flex-direction: row; justify-content:flex-start;"-->
                     {% endfor %}
+                </span>
                 </span>
             </span>
         </span>

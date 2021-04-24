@@ -1,5 +1,6 @@
 import os
 import datetime
+from random import randrange
 
 from flask import Flask, render_template, redirect, request, make_response, session, abort, flash
 from data import db_session
@@ -8,6 +9,7 @@ from data.users import User
 from data.news import News
 from data.jobs import Jobs
 from data.films import Films
+from data.booking import Booking
 from data.time_table import TimeTable
 
 from forms.user import RegisterForm
@@ -19,6 +21,7 @@ from forms.loginform import LoginForm
 from forms.jobs import JobsForm
 from forms.news import NewsForm
 from forms.schedule import ScheduleForm
+from forms.booking import Booking
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -249,27 +252,39 @@ def news_delete(id):
     return redirect('/')
 
 
-@app.route('/booking/<int:id>', methods=['GET', 'POST'])
-def booking(id):
-    db_sess = db_session.create_session()
-    film = db_sess.query(Films).filter(Films.id == id
-                                       ).first()
-    films = db_sess.query(Films)
-    times = db_sess.query(TimeTable)
-    user = db_sess.query(User).first()
-    if film:
-        pass
-        # db_sess.delete(film)
-        # db_sess.commit()
-    else:
-        abort(404)
-    # return redirect('/')
-    return render_template("3.html", films=films, times=times, user=user)
+# @app.route('/booking/<int:id>', methods=['GET', 'POST'])
+# def booking(id):
+#     db_sess = db_session.create_session()
+#     film = db_sess.query(Films).filter(Films.id == id
+#                                        ).first()
+#     films = db_sess.query(Films)
+#     times = db_sess.query(TimeTable)
+#     user = db_sess.query(User).first()
+#     if film:
+#         pass
+#         # db_sess.delete(film)
+#         # db_sess.commit()
+#     else:
+#         abort(404)
+#     # return redirect('/')
+#     return render_template("3.html", films=films, times=times, user=user)
 
 
 @app.route("/")
 @app.route("/index", methods=['GET', 'POST'])
 def index():
+    """авторизованного пользователя отображались и его личные записи."""
+    print(datetime.datetime.now())
+    # day_standart = datetime.datetime.now().date()
+    db_sess = db_session.create_session()
+    films = db_sess.query(Films)
+    times = db_sess.query(TimeTable)
+    user = db_sess.query(User).first()
+    return render_template("2.html", films=films, times=times, user=user)
+
+
+@app.route("/booking/<int:id>", methods=['GET', 'POST'])
+def booking(id):
     """авторизованного пользователя отображались и его личные записи."""
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
@@ -277,38 +292,30 @@ def index():
     user = db_sess.query(User).first()
     buttons = [int(i) for i in range(1, 31)]
     column = [int(i) for i in range(1, 5)]
+    form = Booking()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        booking = Booking()
+        print(randrange(999999))
+        if booking.rov.data < 9 and booking.count.data < 125:
+            booking.id_booking = randrange(999999)
+            booking.row = form.rov.data
+            booking.count = form.count.data
+            booking.place = f"'{form.place.data}'"
+            db_sess.add(booking)
+            db_sess.commit()
+        else:
+            return 1
+
+
+        return redirect('/')
+    return render_template("3.html", id=id, times=times, user=user, buttons=buttons, column=column,
+                           form=form)
     # print(datetime.datetime.now())
     # day_standart = datetime.datetime.now().date()
     # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
     # а = request.form.get('checkbox-btn-group')
     # print(a)
-    if request.method == 'POST':
-        print(request.form.get('checkbox-btn-group'))
-    # id = 0
-    # if request.method == 'POST':
-    #     id = request.form.get('checkbox-btn-group')
-    #     print(request.form.get('checkbox-btn-group'))
-    return render_template("2.html", films=films, times=times, user=user, buttons=buttons, column=column)
-
-
-@app.route("/tt", methods=['GET', 'POST'])
-def t():
-    """авторизованного пользователя отображались и его личные записи."""
-    db_sess = db_session.create_session()
-    films = db_sess.query(Films)
-    times = db_sess.query(TimeTable)
-    user = db_sess.query(User).first()
-
-    # day_standart = datetime.datetime.now().date()
-    # day_month = (datetime.datetime.now().day, datetime.datetime.now().month)
-    # а = request.form.get('checkbox-btn-group')
-    # print(a)
-    id = 0
-    if request.method == 'POST':
-        id = request.form.get('checkbox-btn-group')
-    print(request.form.get('ac'))
-        # return render_template("2.html", id=id)
-    return render_template("2.html", id=id)
 
 
 # @app.route("/admin")
@@ -357,8 +364,8 @@ def schedule():
         time.id_film = form.id_film.data
         time.time = form.time.data
         time.price = form.price.data
-        time.hall = form.hall.data
-        time.date = form.date.data
+        # time.hall = form.hall.data
+        time.date = f"{form.date_day.data} {form.date_month.data}"
         db_sess.add(time)
         db_sess.commit()
         return redirect('/')
@@ -454,4 +461,5 @@ if __name__ == '__main__':
 """git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/Dragonfly774/flask_alch.git
-git push -u origin main"""
+git push -u origin main
+"""

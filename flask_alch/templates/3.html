@@ -1,10 +1,79 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block content %}
+{% for time in times%}
+{%if time.id == id%}
+<h3>{{time.film.title}}</h3>
+<h3>{{time.date}}</h3>
+<!--<span style="text-align: center"><h1>{{time.film.title}}</h1></span>-->
+
+<!--    <div class="content" style="width: 80%; display: flex; flex-wrap: wrap; flex-direction: row; margin-bottom: 5%;">-->
+<!--            <div style="display: flex; flex-wrap: wrap; flex-direction: row; ">-->
+<!--            {%for but in buttons%}-->
+<!--            <div class="bt" style="width: 50%; display: flex; flex-direction: row;">-->
+<!--&lt;!&ndash;<form action="" method="post">&ndash;&gt;-->
+<!--                <button class="pl" value="{{but}}">-->
+<!--                    <span style="display: flex; flex-wrap: wrap; margin-left: 5%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span>-->
+<!--                </button>-->
+<!--            {%endfor%}-->
+<!--            </div>-->
+<!--        </div><br>-->
+<!--        <div style="display: flex; flex-direction: row;">-->
+<!--            {%for but in buttons%}-->
+<!--            <div class="bt1" style="width: 20%; ">-->
+<!--&lt;!&ndash;<form action="" method="post">&ndash;&gt;-->
+<!--                <button class="pl" value="{{but}}">-->
+<!--                    <span style="display: flex; flex-wrap: wrap; margin-left: 10%;margin-top: 20%; width: 20px; max-width: 75%;flex-direction: row;">{{but}}</span>-->
+<!--                </button>-->
+<!--            </div>-->
+<!--            {%endfor%}-->
+<!--            </div>-->
+
+
+<!--</div>-->
+<span>
+<div class="content" style="display: flex; margin-bottom: 150px;">
+<img src="https://taganrogtv.ru/wp-content/uploads/2013/02/на-Дзержинского-малый-зал.jpg"
+                 style="border-radius: 15px; border: 5px #ccc solid; height: 10%;" alt="">
+    <div style="margin-left: 10%">
+        <span style="display: flex; display: flex; flex-direction: row; flex-wrap: wrap; margin-bottom: 10%; margin-left: 5%">
+                <form action="" method="post">
+                {{ form.hidden_tag() }}
+                <p>
+                    {{ form.rov.label }}<br>
+                    {{ form.rov(class="form-control") }}<br>
+                    {% for error in form.rov.errors %}
+                <p class="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+                {% endfor %}
+                </p>
+                <p>
+                    {{ form.count.label }}<br>
+                    {{ form.count(class="form-control") }}<br>
+                    {% for error in form.count.errors %}
+                <p content="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+                {% endfor %}
+                </p>
+                <p>
+                    {{ form.place.label }}<br>
+                    {{ form.place(class="form-control") }}<br>
+                    {% for error in form.place.errors %}
+                <p content="alert alert-danger" role="alert">
+                    {{ error }}
+                </p>
+                {% endfor %}
+                </p>
+
+                <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+                {{message}}
+            </form>
+        </span>
+    </div>
+</div>
+</span>
+{%endif%}
+{%endfor%}
+{% endblock %}

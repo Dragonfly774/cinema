@@ -31,19 +31,20 @@
     </p>
     {% endfor %}
     </p>
+
     <p>
-        {{ form.hall.label }}<br>
-        {{ form.hall(class="form-control") }}<br>
-        {% for error in form.hall.errors %}
+        {{ form.date_day.label }}<br>
+        {{ form.date_day(class="form-control") }}<br>
+        {% for error in form.date_day.errors %}
     <p content="alert alert-danger" role="alert">
         {{ error }}
     </p>
     {% endfor %}
     </p>
     <p>
-        {{ form.date.label }}<br>
-        {{ form.date(class="form-control") }}<br>
-        {% for error in form.date.errors %}
+        {{ form.date_month.label }}<br>
+        {{ form.date_month(class="form-control") }}<br>
+        {% for error in form.date_month.errors %}
     <p content="alert alert-danger" role="alert">
         {{ error }}
     </p>
