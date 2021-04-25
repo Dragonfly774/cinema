@@ -6,22 +6,19 @@ from flask import Flask, render_template, redirect, request, make_response, sess
 from data import db_session
 
 from data.users import User
-from data.news import News
-from data.jobs import Jobs
 from data.films import Films
 from data.booking import Booking
 from data.time_table import TimeTable
 
-from forms.user import RegisterForm
 from waitress import serve
 
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 
 from forms.loginform import LoginForm
-from forms.jobs import JobsForm
-from forms.news import NewsForm
+from forms.user import RegisterForm
 from forms.schedule import ScheduleForm
 from forms.booking import BookingForm
+from forms.films import FilmsForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -152,14 +149,14 @@ def booking(id):
     time_booking_error = f"{time_day.date} в {time_day.time}"
     places = [int(i) for i in range(1, 16)]
     column = [int(i) for i in range(1, 5)]
-
+    print(films)
     form = BookingForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         id_booking = int(randrange(99999))
         plase_and_row = db_sess.query(Booking).filter(Booking.place == request.form['place'],
                                                       Booking.roww == request.form['row'],
-                                                      Booking.title == films,
+                                                      Booking.title == films.title,
                                                       Booking.time == time_booking_error).first()
         if plase_and_row:
             return render_template("booking.html", id=id, times=times, places=places, column=column, form=form,
@@ -170,9 +167,9 @@ def booking(id):
                     book = Booking(
                         id_booking=id_booking,
                         place=request.form['place'],
-                        # count=request.form['count'],
                         time=f"{time.date} в {time.time}",
                         title=time.film.title,
+                        price=time_day.price,
                         roww=request.form['row'],
                         email=current_user.email,
                         number=form.number.data,
@@ -182,7 +179,7 @@ def booking(id):
                     db_sess.commit()
                     return redirect('/my_booking')
     return render_template("booking.html", id=id, ids=id, times=times, places=places, column=column,
-                           form=form)
+                           price=time_day.price, form=form)
 
 
 @app.route("/my_booking", methods=['GET', 'POST'])
@@ -192,7 +189,6 @@ def my_booking():
     :return: главную страницу
     """
     db_sess = db_session.create_session()
-    # booking_email = db_sess.query(Booking).filter(Booking)
     user = db_sess.query(User).first()
     if user == current_user:
         booking = db_sess.query(Booking)
@@ -205,6 +201,7 @@ def my_booking():
 @app.route('/my_booking_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def my_booking_delete(id):
+    """Обработчик удаления бронирования"""
     db_sess = db_session.create_session()
     book = db_sess.query(Booking).filter(Booking.id == id,
                                          Booking.email == current_user.email
@@ -225,7 +222,6 @@ def schedule(id):
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         time = TimeTable()
-        # time.hall = form.hall.data
         if request.method == 'POST':
             date_month = request.form['class']
             time.date = f"{form.date_day.data} {date_month}"
@@ -242,6 +238,7 @@ def schedule(id):
 @app.route('/schedule_delete/<int:id>', methods=['GET', 'POST'])
 @login_required
 def schedule_delete(id):
+    """Обработчик удаления расписания"""
     db_sess = db_session.create_session()
     times = db_sess.query(TimeTable).filter(TimeTable.id == id).first()
     print(times.date)
@@ -257,48 +254,47 @@ def schedule_delete(id):
     return redirect('/')
 
 
-@app.route('/news/<int:id>', methods=['GET', 'POST'])
+@app.route('/add_film', methods=['GET', 'POST'])
 @login_required
-def edit_news(id):
-    """редактирование новостей"""
-    form = NewsForm()
-    if request.method == "GET":
-        db_sess = db_session.create_session()
-        news = db_sess.query(News).filter(News.id == id,
-                                          News.user == current_user
-                                          ).first()
-        if news:
-            form.title.data = news.title
-            form.content.data = news.content
-            form.is_private.data = news.is_private
-        else:
-            abort(404)
+def add_film():
+    """Обработчик формы добавления фильма"""
+    form = FilmsForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        news = db_sess.query(News).filter(News.id == id,
-                                          News.user == current_user
-                                          ).first()
-        if news:
-            news.title = form.title.data
-            news.content = form.content.data
-            news.is_private = form.is_private.data
-            db_sess.commit()
-            return redirect('/')
-        else:
-            abort(404)
-    return render_template('news.html',
-                           title='Редактирование новости',
-                           form=form
-                           )
+        film = Films()
+        film.title = form.title.data
+        film.genres = form.genres.data
+        film.link_img = form.img.data
+        film.age = form.age.data
+        db_sess.add(film)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('add_film.html', title='Добавления фильма',
+                           form=form)
+
+
+@app.route('/films_delete/<int:id>', methods=['GET', 'POST'])
+@login_required
+def films_delete(id):
+    """Обработчик удаления фильма"""
+    db_sess = db_session.create_session()
+    film = db_sess.query(Films).filter(Films.id == id).first()
+
+    if film:
+        db_sess.delete(film)
+        db_sess.commit()
+    else:
+        abort(404)
+    return redirect('/')
 
 
 def main():
     db_session.global_init("db/blogs.sqlite")
     db_sess = db_session.create_session()
-    # app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
     # # с дефаултными значениями будет не более 4 потов
-    port = int(os.environ.get('PORT', 5000))
-    serve(app, port=port, host="0.0.0.0")
+    # port = int(os.environ.get('PORT', 5000))
+    # serve(app, port=port, host="0.0.0.0")
 
 
 if __name__ == '__main__':

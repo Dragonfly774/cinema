@@ -29,12 +29,16 @@
         </div>
     </div>
 </div>
+<a href="add_film" class="btn btn-info" style="margin-top: 5%; margin-left: 3%;">Добавить фильм</a>
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
     {% for item in films%}
     <div class="card"
          style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
         {% if current_user.is_authenticated and current_user == user%}
-        <a href="schedule/{{item.id}}" class="btn btn-secondary">Добавить расписание к фильму</a>
+        <div style="display: flex; flex-wrap: wrap; flex-direction: row;">
+            <a href="schedule/{{item.id}}" class="btn btn-secondary">Добавить расписание к фильму</a>
+            <a href="films_delete/{{item.id}}" class="btn btn-danger">Удалить фильм</a>
+        </div>
         {% endif %}
                 <span style="display: flex; ">
                         <div class="img">
@@ -51,10 +55,8 @@
                             <span style="">{{item.genres}}</span><br>
 
                             <span style="">
-            <!--                    margin-left: 10%; margin-bottom: 10%; display: flex;flex-wrap: wrap; width: 13%; lex-direction: row;-->
-
+                                    <!--margin-left: 10%; margin-bottom: 10%; display: flex;flex-wrap: wrap; width: 13%; lex-direction: row;-->
                                 {% for time in times%}
-                                <!--<button>Надпись на кнопке</button>-->
                                     {% if item.id == time.id_film %}
                                         {%if time.time[:6] > time_now%}
                                             {% if current_user.is_authenticated and current_user == user%}
@@ -67,7 +69,7 @@
                                             </span>
                                         {%endif%}
                                     {%endif%}
-                                <!--                    style="margin-bottom: 10%; display: flex; flex-wrap: wrap; flex-direction: row; justify-content:flex-start;"-->
+                                <!--style="margin-bottom: 10%; display: flex; flex-wrap: wrap; flex-direction: row; justify-content:flex-start;"-->
                                 {% endfor %}
                             </span>
                         </span>

@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2 style="text-align: center">Добавление фильма</h2>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.title.label }}<br>
+        {{ form.title(class="form-control") }}<br>
+        {% for error in form.title.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.genres.label }}<br>
+        {{ form.genres(class="form-control") }}<br>
+        {% for error in form.genres.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.img.label }}<br>
+        {{ form.img(class="form-control") }}<br>
+        {% for error in form.img.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.age.label }}<br>
+        {{ form.age(class="form-control") }}<br>
+        {% for error in form.age.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <span style="display: flex; flex-direction: row;">
+     <div>
+    <p>{{ form.submit(type="submit", class="btn btn-outline-primary") }}</p>
+    {{message}}
+     </div>
+     <div style="margin-left: 1%">
+          <a class="btn btn-outline-primary" href="/" style="">Назад</a>
+
+     </div>
+    </span>
+</form>
+{% endblock %}
