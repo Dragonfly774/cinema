@@ -1,17 +1,18 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!--{% if current_user.is_authenticated and current_user == user%}-->
+<!--    <a href="schedule" class="btn btn-secondary">Сегодня</a>-->
+<!--{% endif %}-->
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; justify-content:space-around">
 {% for item in booking%}
-<div class="card" style="width: 25%; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
-    {% if current_user.is_authenticated and current_user == user%}
-    <a href="schedule" class="btn btn-secondary">Добавить расписание к фильму</a>
-    {% endif %}
+<div class="card" style="width: 200px; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
             <span style="display: flex; ">
                 <div class="content">
                     <div  class="left">
                         <span style="display: flex; flex-direction: column;">
                             <h4>{{item.title}}</h4><br>
+                            <h4>{{item.price.price}}</h4><br>
                             <h4>ID: {{item.id_booking}}</h4><br>
                             <h4>Дата: {{item.time}}</h4><br>
                             <h4>Ряд {{item.roww}} место {{item.place}}</h4><br>

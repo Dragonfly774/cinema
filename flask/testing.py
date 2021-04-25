@@ -20,10 +20,11 @@ months = {
     12: 'Декабрь'
 }
 
-day= f'{datetime.datetime.now().day}'
+day= f'{datetime.datetime.now().hour}'
+p = "10:00 до 11:28"
 day_month = f'{months[datetime.datetime.now().month]}'
 
-print(day,day_month)
+print(p[:6])
 
 
 db_session.global_init("db/blogs.sqlite")

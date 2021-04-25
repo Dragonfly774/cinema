@@ -13,15 +13,7 @@
     </p>
     {% endfor %}
     </p>
-    <p>
-        {{ form.id_film.label }}<br>
-        {{ form.id_film(class="form-control") }}<br>
-        {% for error in form.id_film.errors %}
-    <p content="alert alert-danger" role="alert">
-        {{ error }}
-    </p>
-    {% endfor %}
-    </p>
+
     <p>
         {{ form.price.label }}<br>
         {{ form.price(class="form-control") }}<br>
@@ -45,9 +37,6 @@
     <div class="form-group">
         <label for="classSelect">Месяц</label>
         <select class="form-control" id="classSelect" name="class">
-          <option>Январь</option>
-          <option>Февраль</option>
-          <option>Март</option>
           <option>Апрель</option>
           <option>Май</option>
           <option>Июнь</option>
@@ -57,6 +46,9 @@
           <option>Октябрь</option>
           <option>Ноябрь</option>
           <option>Декабрь</option>
+          <option>Январь</option>
+          <option>Февраль</option>
+          <option>Март</option>
         </select>
      </div>
 

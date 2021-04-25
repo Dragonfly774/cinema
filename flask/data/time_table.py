@@ -11,6 +11,7 @@ class TimeTable(SqlAlchemyBase):
     id_film = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("films.id"))
     date = sqlalchemy.Column(sqlalchemy.String)
     time = sqlalchemy.Column(sqlalchemy.String)
-    hall = sqlalchemy.Column(sqlalchemy.Integer)
     price = sqlalchemy.Column(sqlalchemy.String)
     film = orm.relation('Films')
+
+    booking = orm.relation("Booking", back_populates='price')
