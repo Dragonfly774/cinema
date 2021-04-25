@@ -1,10 +1,11 @@
 import sqlalchemy
-from sqlalchemy import orm, ARRAY
+from sqlalchemy import orm
+from sqlalchemy_serializer import SerializerMixin
 
 from .db_session import SqlAlchemyBase
 
 
-class TimeTable(SqlAlchemyBase):
+class TimeTable(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'time_table'
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)

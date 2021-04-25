@@ -1,9 +1,8 @@
-import os
 import datetime
+import os
 from random import randrange
 
-from flask import Flask, render_template, redirect, request, make_response, session, abort, flash
-from data import db_session
+from flask import Flask, render_template, redirect, request, make_response, abort, jsonify
 
 from data.users import User
 from data.films import Films
@@ -20,8 +19,20 @@ from forms.schedule import ScheduleForm
 from forms.booking import BookingForm
 from forms.films import FilmsForm
 
+from data import db_session, films_api, films_resources
+from flask_restful import reqparse, abort, Api, Resource
+
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
+
+
+api = Api(app)
+
+# для списка объектов
+api.add_resource(films_resources.FilmsListResource, '/api/v2/films')
+# для одного объекта
+api.add_resource(films_resources.FilmsResource, '/api/v2/films/<int:films_id>')
+
 
 #  инициализируем LoginManager
 login_manager = LoginManager()
@@ -131,7 +142,6 @@ def index():
 
     db_sess = db_session.create_session()
     films = db_sess.query(Films)
-    # time_times = db_sess.query(TimeTable).filter(TimeTable.date == day_month)
     times = db_sess.query(TimeTable).filter(TimeTable.date == day_month)
     user = db_sess.query(User).first()
     return render_template("index.html", films=films, times=times, user=user, time_now=time_now)
@@ -148,8 +158,6 @@ def booking(id):
 
     time_booking_error = f"{time_day.date} в {time_day.time}"
     places = [int(i) for i in range(1, 16)]
-    column = [int(i) for i in range(1, 5)]
-    print(films)
     form = BookingForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
@@ -159,7 +167,7 @@ def booking(id):
                                                       Booking.title == films.title,
                                                       Booking.time == time_booking_error).first()
         if plase_and_row:
-            return render_template("booking.html", id=id, times=times, places=places, column=column, form=form,
+            return render_template("booking.html", id=id, times=times, places=places, form=form,
                                    message="Это место уже забронированно")
         if request.method == 'POST':
             for time in times:
@@ -178,8 +186,7 @@ def booking(id):
                     db_sess.add(book)
                     db_sess.commit()
                     return redirect('/my_booking')
-    return render_template("booking.html", id=id, ids=id, times=times, places=places, column=column,
-                           price=time_day.price, form=form)
+    return render_template("booking.html", id=id, ids=id, times=times, places=places, price=time_day.price, form=form)
 
 
 @app.route("/my_booking", methods=['GET', 'POST'])
@@ -288,13 +295,22 @@ def films_delete(id):
     return redirect('/')
 
 
+@app.errorhandler(404)
+def not_found(error):
+    return make_response(jsonify({'error': 'Not found'}), 404)
+
+
 def main():
     db_session.global_init("db/blogs.sqlite")
     db_sess = db_session.create_session()
-    app.run(port=8080, host='127.0.0.1')
+
+    # Api
+    app.register_blueprint(films_api.blueprint)
+
+    # app.run(port=8080, host='127.0.0.1')
     # # с дефаултными значениями будет не более 4 потов
-    # port = int(os.environ.get('PORT', 5000))
-    # serve(app, port=port, host="0.0.0.0")
+    port = int(os.environ.get('PORT', 5000))
+    serve(app, port=port, host="0.0.0.0")
 
 
 if __name__ == '__main__':
