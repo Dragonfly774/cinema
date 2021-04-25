@@ -295,10 +295,10 @@ def edit_news(id):
 def main():
     db_session.global_init("db/blogs.sqlite")
     db_sess = db_session.create_session()
-    app.run(port=8080, host='127.0.0.1')
+    # app.run(port=8080, host='127.0.0.1')
     # # с дефаултными значениями будет не более 4 потов
-    # port = int(os.environ.get('PORT', 5000))
-    # serve(app, port=port, host="0.0.0.0")
+    port = int(os.environ.get('PORT', 5000))
+    serve(app, port=port, host="0.0.0.0")
 
 
 if __name__ == '__main__':

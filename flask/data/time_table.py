@@ -13,5 +13,3 @@ class TimeTable(SqlAlchemyBase):
     time = sqlalchemy.Column(sqlalchemy.String)
     price = sqlalchemy.Column(sqlalchemy.String)
     film = orm.relation('Films')
-
-    booking = orm.relation("Booking", back_populates='price')

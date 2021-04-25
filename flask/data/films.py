@@ -11,11 +11,10 @@ class Films(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     title = sqlalchemy.Column(sqlalchemy.String)
-    actors = sqlalchemy.Column(sqlalchemy.String())
-    age = sqlalchemy.Column(sqlalchemy.String)
-    genres = sqlalchemy.Column(sqlalchemy.String())
+    genres = sqlalchemy.Column(sqlalchemy.String)
     id_kinopoisk = sqlalchemy.Column(sqlalchemy.Integer)
     link_img = sqlalchemy.Column(sqlalchemy.String)
+    age = sqlalchemy.Column(sqlalchemy.String)
 
     timetable = orm.relation("TimeTable", back_populates='film')
 

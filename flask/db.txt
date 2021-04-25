@@ -1,10 +1,10 @@
 Films
-1	Чернобыль. Бездна			Драма, История	1249198	//images.kinopoisk.cloud/posters/1249198.jpg
-2	Майор Гром: Чумной доктор			Боевик, Приключения	1109271	//images.kinopoisk.cloud/posters/1109271.jpg
+1	Чернобыль. Бездна			Драма, История	                                    1249198	//images.kinopoisk.cloud/posters/1249198.jpg
+2	Майор Гром: Чумной доктор	Боевик, Приключения	                                1109271	//images.kinopoisk.cloud/posters/1109271.jpg
 3	Смертельная битва			Фантастика, Фэнтези, Боевик, Триллер, Приключения	8062	//images.kinopoisk.cloud/posters/8062.jpg
-4	Father, The			"Драма	"	1262160	//images.kinopoisk.cloud/posters/1262160.jpg
-5	От винта 2			Детский, Приключения, Комедия, Мультфильм, Семейный	1239328	//images.kinopoisk.cloud/posters/1239328.jpg
-6	Way Down			Боевик, Триллер	1236795	//images.kinopoisk.cloud/posters/1236795.jpg
+4	Father, The			        Драма	                                            1262160	//images.kinopoisk.cloud/posters/1262160.jpg
+5	От винта 2			        Детский, Приключения, Комедия, Мультфильм, Семейный	1239328	//images.kinopoisk.cloud/posters/1239328.jpg
+6	Way Down			        Боевик, Триллер	                                    1236795	//images.kinopoisk.cloud/posters/1236795.jpg
 
 
 
