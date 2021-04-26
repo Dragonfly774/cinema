@@ -7,8 +7,9 @@ from .db_session import SqlAlchemyBase
 
 class Films(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'films'
-    id = sqlalchemy.Column(sqlalchemy.Integer,
-                           primary_key=True, autoincrement=True)
+    # id = sqlalchemy.Column(sqlalchemy.Integer,
+    #                        primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     title = sqlalchemy.Column(sqlalchemy.String)
     genres = sqlalchemy.Column(sqlalchemy.String)
     id_kinopoisk = sqlalchemy.Column(sqlalchemy.Integer)

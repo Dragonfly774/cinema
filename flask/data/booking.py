@@ -7,7 +7,8 @@ from .db_session import SqlAlchemyBase
 class Booking(SqlAlchemyBase):
     __tablename__ = 'booking'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    # id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
     id_booking = sqlalchemy.Column(sqlalchemy.Integer)
     place = sqlalchemy.Column(sqlalchemy.Integer)
     price = sqlalchemy.Column(sqlalchemy.String)

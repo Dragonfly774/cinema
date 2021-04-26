@@ -8,7 +8,8 @@ from .db_session import SqlAlchemyBase
 class TimeTable(SqlAlchemyBase, SerializerMixin):
     __tablename__ = 'time_table'
 
-    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
+    id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True)
+    # id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     id_film = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey("films.id"))
     date = sqlalchemy.Column(sqlalchemy.String)
     time = sqlalchemy.Column(sqlalchemy.String)
