@@ -208,9 +208,8 @@ def my_booking():
 def my_booking_delete(id):
     """Обработчик удаления бронирования"""
     db_sess = db_session.create_session()
-    book = db_sess.query(Booking).filter(Booking.id == id,
-                                         Booking.email == current_user.email
-                                         ).first()
+    book = db_sess.query(Booking).filter(Booking.id_booking == id).first()
+                                         # Booking.email == current_user.email
     if book:
         db_sess.delete(book)
         db_sess.commit()
