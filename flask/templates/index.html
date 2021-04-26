@@ -29,11 +29,13 @@
         </div>
     </div>
 </div>
+{% if current_user.is_authenticated and current_user == user%}
 <a href="add_film" class="btn btn-info" style="margin-top: 5%; margin-left: 3%;">Добавить фильм</a>
+{%endif%}
 <span style="display: flex; flex-wrap: wrap; flex-direction: row; ">
     {% for item in films%}
     <div class="card"
-         style="width: 500px; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
+         style="width: 510px; border-radius: 15px; margin-top: 5%; margin-left: 3%;display: flex; flex-wrap: wrap;  ">
         {% if current_user.is_authenticated and current_user == user%}
         <div style="display: flex; flex-wrap: wrap; flex-direction: row;">
             <a href="schedule/{{item.id}}" class="btn btn-secondary">Добавить расписание к фильму</a>
@@ -51,7 +53,7 @@
                                     <span style="margin-left: 25%;">Премьера</span></div>
                         </div>
                         <span>
-                            <h3 style="">{{item.title}}</h3>
+                            <h4 style="">{{item.title}}</h4>
                             <span style="">{{item.genres}}</span><br>
 
                             <span style="">
@@ -64,8 +66,8 @@
                                             {% endif %}
 
                                             <span style="">
-                                            <a class="btn btn-outline-primary" href="booking/{{time.id}}"
-                                               style="">{{time.time}}</a>
+                                            <a class="btn btn-outline-primary" href="booking/{{item.id}}/{{time.id}}"
+                                               style="margin-left: 4px;">{{time.time}}</a>
                                             </span>
                                         {%endif%}
                                     {%endif%}

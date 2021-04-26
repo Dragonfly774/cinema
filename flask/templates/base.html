@@ -13,12 +13,12 @@
 <body>
 <header>
     <nav class="navbar navbar-light bg-light">
-        <h1>Cinema Sema</h1>
+        <h1>Cinema Booking</h1>
         {% if current_user.is_authenticated %}
-        <span style="margin-left: 1%">
-            <a class="navbar-brand btn-light" href="/logout">Выйти</a>
-            <a class="btn btn-light " href="/">Главная</a>
-            <a class="btn btn-light" href="/my_booking">Моя Бронь</a>
+        <span style="">
+            <a class="btn btn-light " href="/" ><h5>Главная</h5></a>
+            <a class="btn btn-light" href="/my_booking"><h5>Моя Бронь</h5></a>
+            <a class="navbar-brand btn-light" href="/logout" ><h5>Выйти</h5></a>
         </span>
         {% else %}
         <p>

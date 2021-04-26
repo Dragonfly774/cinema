@@ -25,14 +25,12 @@ from flask_restful import reqparse, abort, Api, Resource
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-
 api = Api(app)
 
 # для списка объектов
 api.add_resource(films_resources.FilmsListResource, '/api/v2/films')
 # для одного объекта
 api.add_resource(films_resources.FilmsResource, '/api/v2/films/<int:films_id>')
-
 
 #  инициализируем LoginManager
 login_manager = LoginManager()
@@ -147,14 +145,14 @@ def index():
     return render_template("index.html", films=films, times=times, user=user, time_now=time_now)
 
 
-@app.route("/booking/<int:id>", methods=['GET', 'POST'])
+@app.route("/booking/<int:id>/<int:idt>", methods=['GET', 'POST'])
 @login_required
-def booking(id):
+def booking(id, idt):
     """Обработчик формы бронирование билетов"""
     db_sess = db_session.create_session()
     films = db_sess.query(Films).filter(Films.id == id).first()
     times = db_sess.query(TimeTable)
-    time_day = db_sess.query(TimeTable).filter(TimeTable.id == id).first()
+    time_day = db_sess.query(TimeTable).filter(TimeTable.id == idt).first()
 
     time_booking_error = f"{time_day.date} в {time_day.time}"
     places = [int(i) for i in range(1, 16)]
@@ -167,11 +165,11 @@ def booking(id):
                                                       Booking.title == films.title,
                                                       Booking.time == time_booking_error).first()
         if plase_and_row:
-            return render_template("booking.html", id=id, times=times, places=places, form=form,
+            return render_template("booking.html", id=id, idt=idt, times=times, places=places, form=form,
                                    message="Это место уже забронированно")
         if request.method == 'POST':
             for time in times:
-                if time.id == id:
+                if time.id == idt:
                     book = Booking(
                         id_booking=id_booking,
                         place=request.form['place'],
@@ -186,7 +184,7 @@ def booking(id):
                     db_sess.add(book)
                     db_sess.commit()
                     return redirect('/my_booking')
-    return render_template("booking.html", id=id, ids=id, times=times, places=places, price=time_day.price, form=form)
+    return render_template("booking.html", id=id, idt=idt, times=times, places=places, price=time_day.price, form=form)
 
 
 @app.route("/my_booking", methods=['GET', 'POST'])
@@ -248,7 +246,6 @@ def schedule_delete(id):
     """Обработчик удаления расписания"""
     db_sess = db_session.create_session()
     times = db_sess.query(TimeTable).filter(TimeTable.id == id).first()
-    print(times.date)
     time = f"{times.date} в {times.time}"
     book = db_sess.query(Booking).filter(Booking.time == time).first()
 
@@ -307,10 +304,10 @@ def main():
     # Api
     app.register_blueprint(films_api.blueprint)
 
-    # app.run(port=8080, host='127.0.0.1')
+    app.run(port=8080, host='127.0.0.1')
     # # с дефаултными значениями будет не более 4 потов
-    port = int(os.environ.get('PORT', 5000))
-    serve(app, port=port, host="0.0.0.0")
+    # port = int(os.environ.get('PORT', 5000))
+    # serve(app, port=port, host="0.0.0.0")
 
 
 if __name__ == '__main__':

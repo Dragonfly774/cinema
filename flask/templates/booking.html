@@ -2,7 +2,7 @@
 
 {% block content %}
 {% for time in times%}
-{%if time.id == id%}
+{%if time.id == idt%}
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <div class="content"
@@ -11,8 +11,8 @@
             <h1>Цена билета {{time.price}} &#8381; </h1>
             <h3>{{time.film.title}}</h3>
 
-            <img src="https://taganrogtv.ru/wp-content/uploads/2013/02/на-Дзержинского-малый-зал.jpg"
-                 style="border-radius: 15px; border: 5px #ccc solid; width: auto" alt="">
+            <img src="https://sun9-1.userapi.com/impg/hAGxgRxFqFwnYNySsXgM9BCeQsuqCRFGG4oJMA/B4-C4zScFvo.jpg?size=1782x1080&quality=96&sign=571d471720931760759743f6c060ca85&type=album"
+                 style="border-radius: 15px; border: 5px #ccc solid; width: 500px" alt="">
         </div>
         <div class="text content" style="margin-top: 5% ;margin-left: 25%">
             {%if message %}
@@ -71,10 +71,12 @@
                         </div>
                     </div>
                     <div>
-    <!--                    <a class="btn btn btn-primary" href="/my_booking">Продолжить</a>-->
-                        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-
+                        <span style="display: flex; flex-wrap: wrap; flex-direction: row;">
+                            <p>{{ form.submit(type="submit", class="btn btn-outline-primary") }}</p>
+                            <a href="/" class="btn btn-danger">Назад</a>
+                        </span>
                     </div>
+
                 </div>
             {%endif%}
         </div>
@@ -83,7 +85,6 @@
 {%endif%}
 {%endfor%}
 {% endblock %}
-style="display: flex; display: flex; flex-direction: row; flex-wrap: wrap; margin-bottom: 5%; margin-left: 3%"
 
 
 
