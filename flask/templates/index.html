@@ -62,7 +62,7 @@
                                     {% if item.id == time.id_film %}
                                         {%if time.time[:6] > time_now%}
                                             {% if current_user.is_authenticated and current_user == user%}
-                                                <a href="schedule_delete/{{time.id}}" class="btn btn-danger">Удалить-></a>
+                                                <a href="schedule_delete/{{time.id_film}}" class="btn btn-danger">Удалить-></a>
                                             {% endif %}
 
                                             <span style="">

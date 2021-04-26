@@ -244,13 +244,14 @@ def schedule(id):
 def schedule_delete(id):
     """Обработчик удаления расписания"""
     db_sess = db_session.create_session()
-    times = db_sess.query(TimeTable).filter(TimeTable.id == id).first()
+    times = db_sess.query(TimeTable).filter(TimeTable.id_film == id).first()
     time = f"{times.date} в {times.time}"
-    book = db_sess.query(Booking).filter(Booking.time == time).first()
+    # print(time)
+    # book = db_sess.query(Booking).filter(Booking.time == time).first()
 
     if times:
         db_sess.delete(times)
-        db_sess.delete(book)
+        # db_sess.delete(book)
         db_sess.commit()
     else:
         abort(404)
